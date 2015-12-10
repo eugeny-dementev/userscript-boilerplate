@@ -23,27 +23,27 @@ var userScriptHeader =
 var userScriptFooter = `})();`;
 
 gulp.task('wrap', ['bundle'], function () {
-  return gulp.src('bundle.js')
+  return gulp.src('./out/bundle.js')
     .pipe(concat.header(userScriptHeader))
     .pipe(concat.footer(userScriptFooter))
-    .pipe(rename('userScriptBundle.js'))
-    .pipe(gulp.dest('.'));
+    .pipe(rename('./userScript.js'))
+    .pipe(gulp.dest('./pathToUserScriptDirectory'));
 });
 
 gulp.task('bundle', function () {
-  return browserify('./index.js')
+  return browserify('./src/index.js')
     .transform(babelify)
     .transform(hbsfy)
     .bundle()
     .pipe(source('bundle.js'))
     .pipe(buffer())
-    .pipe(gulp.dest('.'));
+    .pipe(gulp.dest('./out'));
 });
 
 gulp.task('uglify', function () {
-  return gulp.src('bundle.js')
+  return gulp.src('./out/bundle.js')
     .pipe(uglify())
-    .pipe(gulp.dest('.'));
+    .pipe(gulp.dest('./out/'));
 });
 
 gulp.task('build', function () {
@@ -56,8 +56,7 @@ gulp.task('release', function () {
 
 var watchFiles = [
   './templates/**/*.hbs',
-  './src/**/*.js',
-  './index.js'
+  './src/**/*.js'
 ];
 
 gulp.task('dev', function () {

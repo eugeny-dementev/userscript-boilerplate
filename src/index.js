@@ -1,8 +1,8 @@
-var template = require('./templates/index.hbs');
+var template = require('./../templates/index.hbs');
 
 function go () {
   return new Promise((resolve) => {
-    setTimeout(resolve, 2000, 'hello from userscript boilerplate');
+    setTimeout(resolve, 200, 'hello from userscript boilerplate');
   });
 }
 
