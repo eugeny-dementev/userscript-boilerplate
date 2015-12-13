@@ -22,7 +22,7 @@ var userScriptHeader =
 (function(){`;
 var userScriptFooter = `})();`;
 
-gulp.task('wrap', ['bundle'], function () {
+gulp.task('wrap', function () {
   return gulp.src('./out/bundle.js')
     .pipe(concat.header(userScriptHeader))
     .pipe(concat.footer(userScriptFooter))
@@ -47,20 +47,20 @@ gulp.task('uglify', function () {
 });
 
 gulp.task('build', function () {
-  runSequence('build', 'wrap');
+  runSequence('bundle', 'wrap');
 });
 
 gulp.task('release', function () {
-  runSequence('build', 'uglify', 'wrap');
+  runSequence('bundle', 'uglify', 'wrap');
 });
 
 var watchFiles = [
-  './templates/**/*.hbs',
+  './html/**/*.hbs',
   './src/**/*.js'
 ];
 
 gulp.task('dev', function () {
-  chokidar.watch(watchFiles, { ignored: /[\/\\]\./ }).on('all', (event, path) => {
+  chokidar.watch(watchFiles, { ignored: /[\/\\]\./ }).on('all', function (event, path) {
     console.log(event, path);
     gulp.start('build');
   });

@@ -1,4 +1,4 @@
-var template = require('./../templates/index.hbs');
+var template = require('./../html/index.hbs');
 
 function go () {
   return new Promise((resolve) => {
@@ -9,7 +9,7 @@ function go () {
 async function hello () {
   var message = await go();
 
-  document.write(template({ message }));
+  document.body.innerHTML = template({ message });
 }
 
 hello();
